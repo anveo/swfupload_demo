@@ -1,0 +1,8 @@
+*~
+*.log
+*.swp
+*.sqlite3
+db/schema.rb
+db/schema.sql
+tmp/*
+.DS_Store
