@@ -13,12 +13,18 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/app/middleware )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'chriseppstein-compass', :lib => 'compass', :source => 'http://gems.github.com/'
+  config.gem 'haml', :lib => 'haml', :version => '>=2.2.0'
+  config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com'
+  config.gem 'ruby-mp3info', :lib => "mp3info"
+  config.gem 'mime-types', :lib => "mime/types"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
