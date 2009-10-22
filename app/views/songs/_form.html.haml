@@ -1,18 +1,44 @@
 - content_for :head do
-  = javascript_include_tag 'jquery-1.3.2', 'jquery.example', 'swfupload/swfupload', 'swfupload/handlers', 'swfobject', 'audio-player'
+  = javascript_include_tag 'jquery-1.3.2', 'swfupload/swfupload', 'swfupload/swfupload.swfobject', 'swfupload/handlers'
   = stylesheet_link_tag %w(compiled/swfupload)
 - session_key_name = ActionController::Base.session_options[:key]
 
+
 #mp3info
-#swfupload_container
-  %span#spanButtonPlaceholder
+- form_tag songs_path, :multipart => true do
+  #swfupload_degraded_container
+    %noscript= "You should have Javascript enabled for a nicer upload experience"
+    = file_field_tag :Filedata
+    = submit_tag "Add Song"
+  #swfupload_container{ :style => "display: none" }
+    %span#spanButtonPlaceholder
   #divFileProgressContainer
 
 :javascript
-  $(document).ready(function() {
+  SWFUpload.onload = function() {
     var swf_settings = {
-      upload_url: "#{songs_path}?#{session_key_name}="+encodeURIComponent("#{cookies[session_key_name]}")+"&authenticity_token="+encodeURIComponent("#{form_authenticity_token}"),
+
+      // SWFObject settings
+      minimum_flash_version: "9.0.28",
+      swfupload_pre_load_handler: function() {
+        $('#swfupload_degraded_container').hide();
+        $('#swfupload_container').show();
+      },
+      swfupload_load_failed_handler: function() {
+      },
+
+      post_params: {
+        "#{session_key_name}": "#{cookies[session_key_name]}",
+        "authenticity_token": "#{form_authenticity_token}",
+      },
+
+      //upload_url: "#{songs_path}?#{session_key_name}="+encodeURIComponent("#{cookies[session_key_name]}")+"&authenticity_token="+encodeURIComponent("#{form_authenticity_token}"),
+      upload_url: "#{songs_path}",
       flash_url: '/flash/swfupload/swfupload.swf',
+
+      file_types: "*.mp3",
+      file_types_description: "mp3 Files",
+      file_size_limit: "20 MB",
 
       button_placeholder_id: "spanButtonPlaceholder",
       button_width: 380,
@@ -35,4 +61,4 @@
       }
     }
     var swf_upload = new SWFUpload(swf_settings);
-  });
+  };
