@@ -1,0 +1,9 @@
+h1. Rails and SWFUpload
+
+See http://jetpackweb.com/blog/2009/10/21/rails-2-3-4-and-swfupload-rack-middleware-for-flash-uploads-that-degrade-gracefully/ for details
+
+Just make sure you have the required gems, run the database migration, and start the server.
+
+@rake gems:install
+@rake db:migrate
+@script/server
