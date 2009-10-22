@@ -1,0 +1,28 @@
+<% title "Song" %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @song.title %>
+</p>
+<p>
+  <strong>Length In Seconds:</strong>
+  <%=h @song.length_in_seconds %>
+</p>
+<p>
+  <strong>Track File Name:</strong>
+  <%=h @song.track_file_name %>
+</p>
+<p>
+  <strong>Track Content Type:</strong>
+  <%=h @song.track_content_type %>
+</p>
+<p>
+  <strong>Track File Size:</strong>
+  <%=h @song.track_file_size %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_song_path(@song) %> |
+  <%= link_to "Destroy", @song, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", songs_path %>
+</p>

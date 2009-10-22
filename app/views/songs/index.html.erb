@@ -1,0 +1,34 @@
+<% title "Songs" %>
+<% content_for :head do -%>
+  <%= javascript_include_tag 'swfobject', 'audio-player' %>
+  <script type="text/javascript">
+    AudioPlayer.setup("/flash/player.swf", {
+      width: 280
+    });
+  </script>
+<% end -%>
+
+<table>
+  <tr>
+    <th>Artist</th>
+    <th>Title</th>
+    <th>Length</th>
+    <th>Hear It</th>
+  </tr>
+  <% for song in @songs %>
+    <tr>
+      <td><%=h song.artist %></td>
+      <td><%=h song.title %></td>
+      <td><%=h song.convert_seconds_to_time %></td>
+      <td>
+        <span id="audioplayer_<%= song.id %>"></span>
+        <script type="text/javascript">
+          AudioPlayer.embed("audioplayer_<%= song.id %>", { soundFile: "<%= song.track.url %>", titles: "<%= song.title %>" });
+        </script>
+      </td>
+      <td><%= link_to "Destroy", song, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Song", new_song_path %></p>

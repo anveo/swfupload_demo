@@ -1,0 +1,38 @@
+- content_for :head do
+  = javascript_include_tag 'jquery-1.3.2', 'jquery.example', 'swfupload/swfupload', 'swfupload/handlers', 'swfobject', 'audio-player'
+  = stylesheet_link_tag %w(compiled/swfupload)
+- session_key_name = ActionController::Base.session_options[:key]
+
+#mp3info
+#swfupload_container
+  %span#spanButtonPlaceholder
+  #divFileProgressContainer
+
+:javascript
+  $(document).ready(function() {
+    var swf_settings = {
+      upload_url: "#{songs_path}?#{session_key_name}="+encodeURIComponent("#{cookies[session_key_name]}")+"&authenticity_token="+encodeURIComponent("#{form_authenticity_token}"),
+      flash_url: '/flash/swfupload/swfupload.swf',
+
+      button_placeholder_id: "spanButtonPlaceholder",
+      button_width: 380,
+      button_height: 32,
+      button_text : '<span class="button">Select Files <span class="buttonSmall">(20 MB Max)</span></span>',
+      button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 24pt; } .buttonSmall { font-size: 18pt; }',
+      button_text_top_padding: 0,
+      button_text_left_padding: 18,
+      button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+      button_cursor: SWFUpload.CURSOR.HAND,
+      file_queue_error_handler : fileQueueError,
+      file_dialog_complete_handler : fileDialogComplete,
+      upload_progress_handler : uploadProgress,
+      upload_error_handler : uploadError,
+      upload_success_handler : uploadSuccess,
+      upload_complete_handler : uploadComplete,
+
+      custom_settings : {
+        upload_target: "divFileProgressContainer"
+      }
+    }
+    var swf_upload = new SWFUpload(swf_settings);
+  });

@@ -1,0 +1,18 @@
+!!!
+%html{html_attrs}
+  %head
+
+    %meta{"http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8'}
+    %title= h(yield(:title) || "Untitled")
+    = stylesheet_link_tag %w(compiled/nifty)
+    = yield :head
+
+  %body
+    #container
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+
+      - if show_title?
+        %h1= h(yield(:title))
+
+      = yield
